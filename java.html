@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration Form</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+.container{
+    width:500px;
+    margin:40px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    color:#0077cc;
+    margin-bottom:20px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:10px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    background:#0077cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#005fa3;
+}
+
+#studentList{
+    margin-top:30px;
+}
+
+.card{
+    background:#eef7ff;
+    border-left:5px solid #0077cc;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Student Registration Form</h1>
+
+<form id="studentForm">
+
+<label>Student Name</label>
+<input type="text" id="name" placeholder="Enter Name">
+
+<label>Email</label>
+<input type="email" id="email" placeholder="Enter Email">
+
+<label>Age</label>
+<input type="number" id="age" placeholder="Enter Age">
+
+<label>Course</label>
+<select id="course">
+<option value="">Select Course</option>
+<option>HTML</option>
+<option>CSS</option>
+<option>JavaScript</option>
+<option>Java</option>
+<option>Python</option>
+</select>
+
+<button type="button" onclick="registerStudent()">
+Register
+</button>
+
+</form>
+
+<div id="studentList"></div>
+
+</div>
+
+<script>
+
+console.log("===== Student Registration Form =====");
+
+// Array
+let students = [];
+
+// Function
+function registerStudent(){
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let age = document.getElementById("age").value;
+    let course = document.getElementById("course").value;
+
+    // Validation (If-Else)
+
+    if(name=="" || email=="" || age=="" || course==""){
+        alert("Please fill all fields");
+        return;
+    }
+
+    // Object
+
+    let student = {
+        name,
+        email,
+        age,
+        course
+    };
+
+    // Array Push
+    students.push(student);
+
+    console.log("===== Registered Students =====");
+    console.log(students);
+
+    // Display Students
+    displayStudents();
+
+    // Reset Form
+    document.getElementById("studentForm").reset();
+}
+
+
+// Function
+
+function displayStudents(){
+
+    let output="";
+
+    // forEach()
+
+    students.forEach(function(student,index){
+
+        output += `
+        <div class="card">
+            <h3>Student ${index+1}</h3>
+
+            <p><strong>Name:</strong> ${student.name}</p>
+            <p><strong>Email:</strong> ${student.email}</p>
+            <p><strong>Age:</strong> ${student.age}</p>
+            <p><strong>Course:</strong> ${student.course}</p>
+        </div>
+        `;
+
+    });
+
+    document.getElementById("studentList").innerHTML = output;
+
+
+    // map()
+
+    let names = students.map(function(student){
+        return student.name;
+    });
+
+    console.log("Student Names");
+    console.log(names);
+
+
+    // filter()
+
+    let adults = students.filter(function(student){
+        return student.age >= 18;
+    });
+
+    console.log("Age >= 18");
+    console.log(adults);
+
+
+    // reduce()
+
+    let totalAge = students.reduce(function(sum,student){
+        return sum + Number(student.age);
+    },0);
+
+    console.log("Total Age");
+    console.log(totalAge);
+
+
+    // find()
+
+    let foundStudent = students.find(function(student){
+        return student.name === "Bhavana";
+    });
+
+    console.log("Find Student");
+    console.log(foundStudent);
+
+
+    // Destructuring
+
+    if(students.length>0){
+
+        const {name,email} = students[0];
+
+        console.log("Destructuring");
+        console.log(name);
+        console.log(email);
+
+    }
+
+
+    // Spread Operator
+
+    let copyStudents = [...students];
+    console.log("Spread Operator");
+    console.log(copyStudents);
+
+
+    // Rest Operator
+
+    let numbers = [10,20,30,40,50];
+
+    const[first,second,...remaining] = numbers;
+
+    console.log(first);
+    console.log(second);
+    console.log(remaining);
+
+
+    // Template Literal
+
+    students.forEach(student=>{
+        console.log(`${student.name} enrolled in ${student.course}`);
+    });
+
+}
+
+</script>
+
+</body>
+</html>
